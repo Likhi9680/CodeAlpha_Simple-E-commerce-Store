@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Placed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .center a button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .center a button:hover {
+            background-color: #45a049;
+        }
+
+        .flower {
+            position: fixed;
+            top: -50px;
+            font-size: 24px;
+            animation: fall linear infinite;
+            z-index: 9999;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            margin-top: 420px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+        {% if username %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login/Register</a>
+        {% endif %}
+    </nav>
+
+    <div class="center">
+        <h2>Thank you for your order!</h2>
+        <p>Your order has been successfully placed.</p>
+        <a href="/"><button>Back to Home</button></a>
+    </div>
+
+    <footer>
+        © 2025 Snapshop. All rights reserved.
+    </footer>
+
+    <!-- Flower Animation Script -->
+    <script>
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            flower.style.left = Math.random() * window.innerWidth + 'px';
+            flower.style.animationDuration = 3 + Math.random() * 5 + 's';
+            flower.innerText = '🌸';
+            document.body.appendChild(flower);
+            setTimeout(() => flower.remove(), 8000);
+        }
+        setInterval(createFlower, 300);
+    </script>
+</body>
+</html>

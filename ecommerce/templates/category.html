@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ category }} Products - My E-Commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+        {% if username %}
+            <span>Welcome, {{ username }}!</span>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
+    </nav>
+
+    <h2>{{ category }} Products</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for product in products %}
+        <div class="product">
+            <a href="/product/{{ product._id }}">
+                <img src="{{ url_for('static', filename='img/' + product.image) }}" alt="{{ product.name }}" style="width: 100%; height: auto;" />
+                <h3>{{ product.name }}</h3>
+                <p>Price: ₹{{ product.price }}</p>
+            </a>
+            <button onclick="window.location.href='/add-to-cart/{{ product._id }}'">Add to Cart</button>
+        </div>
+        {% else %}
+            <p>No products found in this category.</p>
+        {% endfor %}
+    </div>
+    <footer style="text-align: center; padding: 20px; background-color: #f1f1f1; margin-top: 40px;">
+    © 2025 Snapshop. All rights reserved.
+</footer>
+
+</body>
+</html>

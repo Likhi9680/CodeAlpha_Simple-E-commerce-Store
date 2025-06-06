@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }} - My E-Commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+        <a href="/login">Login</a>
+    </nav>
+    <h2>{{ product.name }}</h2>
+    <img src="{{ url_for('static', filename='img/' ~ product.image) }}" alt="{{ product.name }}" style="width:300px;height:300px;">
+    <p>Price: ₹{{ product.price }}</p>
+    <p>Description: {{ product.description }}</p>
+    <button onclick="window.location.href='/add-to-cart/{{ product._id }}'">Add to Cart</button>
+    
+    <h3>Similar Products</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for similar in similar_products %}
+        <div class="product" style="border:1px solid #ccc; padding:10px; width:150px;">
+            <a href="/product/{{ similar._id }}">
+                <img src="{{ url_for('static', filename='img/' ~ similar.image) }}" alt="{{ similar.name }}" style="width: 100%; height: auto;">
+                <p>{{ similar.name }}</p>
+                <p>₹{{ similar.price }}</p>
+            </a>
+            <button onclick="window.location.href='/add-to-cart/{{ similar._id }}'">Add to Cart</button>
+        </div>
+        {% endfor %}
+    </div>
+    
+<footer style="text-align: center; padding: 20px; background-color: #f1f1f1; margin-top: 40px;">
+    © 2025 Snapshop. All rights reserved.
+</footer>
+
+</body>
+</html>

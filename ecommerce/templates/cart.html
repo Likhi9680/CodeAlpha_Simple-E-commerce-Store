@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .cart-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .actions {
+            margin-top: 8px;
+        }
+        .actions form {
+            display: inline-block;
+            margin-left: 8px;
+        }
+        .actions input {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+        {% if username %}
+            <span>Welcome, {{ username }}!</span>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login/Register</a>
+        {% endif %}
+    </nav>
+
+    <h2>Your Cart</h2>
+    {% if cart_items %}
+        <ul>
+            {% for entry in cart_items.values() %}
+                <li class="cart-item">
+                    <strong>{{ entry.product.name }}</strong><br>
+                    ₹{{ entry.product.price }} × {{ entry.quantity }} = ₹{{ entry.product.price * entry.quantity }}
+
+                    <div class="actions">
+                        <a href="/remove-one/{{ entry.product._id }}">Remove 1</a>
+                        <a href="/remove-all/{{ entry.product._id }}">Remove All</a>
+
+                        <form action="/remove-n/{{ entry.product._id }}" method="POST">
+                            <input type="number" name="count" value="1" min="1" max="{{ entry.quantity }}" required>
+                            <button type="submit">Remove N</button>
+                        </form>
+
+                        <form action="/add-n/{{ entry.product._id }}" method="POST">
+                            <input type="number" name="count" value="1" min="1" required>
+                            <button type="submit">Add N</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total: ₹{{ total }}</strong></p>
+        <div style="text-align: center; margin-top: 20px;">
+    <a href="/place-order">
+        <button style="padding: 10px 20px;">Place Order</button>
+    </a>
+</div>
+
+    {% else %}
+        <p><strong>Your cart is empty.<strong></p>
+    {% endif %}
+    
+<footer style="text-align: center; padding: 20px; background-color:#f1f1f1; margin-top: 490px;color:lightblack">
+    © 2025 Snapshop. All rights reserved.
+</footer>
+
+</body>
+</html>
