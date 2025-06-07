@@ -6,7 +6,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
-app.config["MONGO_URI"] = "mongodb+srv://Likhitha:Likhi123@cluster.1gnh2bj.mongodb.net/ecommerce"
+app.config["MONGO_URI"] = "mongodb+srv://<Username>:<Password>@cluster.1gnh2bj.mongodb.net/ecommerce"
 mongo = PyMongo(app)
 
 @app.route('/')
